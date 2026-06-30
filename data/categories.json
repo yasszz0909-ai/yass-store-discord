@@ -1,0 +1,32 @@
+[
+  {
+    "id": "freefire",
+    "name": "Free Fire",
+    "emoji": "🔥",
+    "isOpen": false
+  },
+  {
+    "id": "mobilelegend",
+    "name": "Mobile Legend",
+    "emoji": "📱",
+    "isOpen": false
+  },
+  {
+    "id": "skin_fish_it",
+    "name": "Skin Fish It",
+    "emoji": "🎣",
+    "isOpen": false
+  },
+  {
+    "id": "gift_in_game",
+    "name": "Gift In Game",
+    "emoji": "🎁",
+    "isOpen": false
+  },
+  {
+    "id": "robux_login",
+    "name": "Robux Via Login",
+    "emoji": "💰",
+    "isOpen": false
+  }
+]

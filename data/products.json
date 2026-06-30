@@ -1,0 +1,28 @@
+[
+  { "id": "ff-d-50",  "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "50 Diamonds",  "amount": 50,  "price": 7900,  "emoji": "💎" },
+  { "id": "ff-d-70",  "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "70 Diamonds",  "amount": 70,  "price": 11000, "emoji": "💎" },
+  { "id": "ff-d-100", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "100 Diamonds", "amount": 100, "price": 14500, "emoji": "💎" },
+  { "id": "ff-d-140", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "140 Diamonds", "amount": 140, "price": 19600, "emoji": "💎" },
+  { "id": "ff-d-210", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "210 Diamonds", "amount": 210, "price": 29000, "emoji": "💎" },
+  { "id": "ff-d-300", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "300 Diamonds", "amount": 300, "price": 42000, "emoji": "💎" },
+  { "id": "ff-d-355", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "355 Diamonds", "amount": 355, "price": 48500, "emoji": "💎" },
+  { "id": "ff-d-425", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "425 Diamonds", "amount": 425, "price": 58000, "emoji": "💎" },
+  { "id": "ff-d-500", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "500 Diamonds", "amount": 500, "price": 68000, "emoji": "💎" },
+  { "id": "ff-d-720", "game": "Free Fire", "gameSlug": "freefire", "type": "diamond", "name": "720 Diamonds", "amount": 720, "price": 95500, "emoji": "💎" },
+  { "id": "ff-weekly-membership",  "game": "Free Fire", "gameSlug": "freefire", "type": "membership", "name": "Weekly Membership",  "amount": null, "price": 30700, "emoji": "👑" },
+  { "id": "ff-monthly-membership", "game": "Free Fire", "gameSlug": "freefire", "type": "membership", "name": "Monthly Membership", "amount": null, "price": 89000, "emoji": "👑" },
+  { "id": "ff-booyah-pass",        "game": "Free Fire", "gameSlug": "freefire", "type": "membership", "name": "Booyah Pass Card",   "amount": null, "price": 46000, "emoji": "🎖️" },
+
+  { "id": "ml-d-10",  "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "10 Diamonds",  "amount": 10,  "price": 3100,  "emoji": "💎" },
+  { "id": "ml-d-22",  "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "22 Diamonds",  "amount": 22,  "price": 7500,  "emoji": "💎" },
+  { "id": "ml-d-70",  "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "70 Diamonds",  "amount": 70,  "price": 20000, "emoji": "💎" },
+  { "id": "ml-d-140", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "140 Diamonds", "amount": 140, "price": 39200, "emoji": "💎" },
+  { "id": "ml-d-222", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "222 Diamonds", "amount": 222, "price": 60000, "emoji": "💎" },
+  { "id": "ml-d-296", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "296 Diamonds", "amount": 296, "price": 80000, "emoji": "💎" },
+  { "id": "ml-d-355", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "355 Diamonds", "amount": 355, "price": 99500, "emoji": "💎" },
+  { "id": "ml-d-440", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "440 Diamonds", "amount": 440, "price": 118300,"emoji": "💎" },
+  { "id": "ml-d-514", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "diamond", "name": "514 Diamonds", "amount": 514, "price": 138000,"emoji": "💎" },
+  { "id": "ml-weekly-pass",    "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "membership", "name": "Weekly Diamond Pass",    "amount": null, "price": 30100, "emoji": "💳" },
+  { "id": "ml-weekly-pass-2x", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "membership", "name": "Weekly Diamond Pass 2x", "amount": null, "price": 59100, "emoji": "💳" },
+  { "id": "ml-weekly-pass-3x", "game": "Mobile Legend", "gameSlug": "mobilelegend", "type": "membership", "name": "Weekly Diamond Pass 3x", "amount": null, "price": 88000, "emoji": "💳" }
+]
