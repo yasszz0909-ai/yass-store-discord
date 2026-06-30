@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yass Store — Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">🛒</div>
+    <h1>Yass Store</h1>
+    <p>Admin Dashboard</p>
+    <form id="login-form">
+      <input type="password" id="login-pass" placeholder="Password admin" autocomplete="current-password">
+      <button type="submit">🔑 Masuk</button>
+    </form>
+    <div id="login-error" class="error-msg" style="display:none"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <span class="logo">🛒</span>
+      <div>
+        <div class="store-name">Yass Store</div>
+        <div class="store-sub">Admin Panel</div>
+      </div>
+    </div>
+    <nav>
+      <div class="nav-group-label">STORE</div>
+      <a href="#" class="nav-item active" data-section="overview">📊 Overview</a>
+      <a href="#" class="nav-item" data-section="orders">📋 Orders</a>
+      <a href="#" class="nav-item" data-section="analytics">📈 Analytics</a>
+      <div class="nav-group-label">PRODUK</div>
+      <a href="#" class="nav-item" data-section="gig">🎁 GiG Manager</a>
+      <a href="#" class="nav-item" data-section="items">📦 Semua Item</a>
+      <a href="#" class="nav-item" data-section="categories">📂 Kategori</a>
+      <a href="#" class="nav-item" data-section="stock">🔢 Stock</a>
+      <div class="nav-group-label">LAINNYA</div>
+      <a href="#" class="nav-item" data-section="vouchers">🎫 Vouchers</a>
+      <a href="#" class="nav-item" data-section="reviews">⭐ Reviews</a>
+      <a href="#" class="nav-item" data-section="bans">🔨 Ban List</a>
+      <a href="#" class="nav-item" data-section="settings">⚙️ Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="btn-logout" class="btn btn-sm btn-danger">🚪 Logout</button>
+      <div class="sidebar-meta">
+        <div id="sidebar-status" class="status-dot online" title="Online"></div>
+        <button id="btn-theme" class="btn-icon" title="Toggle tema" onclick="toggleTheme()">🌙</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main id="content">
+
+    <!-- Notification Bell -->
+    <div id="notif-bar" class="notif-bar" style="display:none">
+      <span id="notif-text"></span>
+      <button onclick="document.getElementById('notif-bar').style.display='none'" class="notif-close">✕</button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section id="section-overview" class="section active">
+      <div class="section-header">
+        <h2>📊 Overview</h2>
+        <div class="header-actions">
+          <span id="ov-maint-badge" class="badge" style="display:none"></span>
+          <button class="btn btn-sm btn-secondary" onclick="loadOverview()">🔄 Refresh</button>
+        </div>
+      </div>
+      <div id="stats-grid" class="stats-grid"></div>
+      <div class="grid-3">
+        <div class="card span-2">
+          <div class="card-header">📈 Revenue 7 Hari Terakhir</div>
+          <div class="chart-wrap"><canvas id="chart-revenue"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header">⚠️ Alert</div>
+          <div id="ov-alerts"></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">📋 Order Terbaru</div>
+          <div id="recent-orders-table"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">💰 Revenue per Kategori</div>
+          <div id="rev-by-cat"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section id="section-orders" class="section">
+      <div class="section-header">
+        <h2>📋 Orders</h2>
+        <div class="header-actions">
+          <select id="order-filter" onchange="loadOrders()">
+            <option value="all">Semua Status</option>
+            <option value="ORDER CREATED">Order Created</option>
+            <option value="WAITING PAYMENT">Waiting Payment</option>
+            <option value="PROOF SENT">Proof Sent</option>
+            <option value="VERIFIED">Verified</option>
+            <option value="DONE">Done</option>
+            <option value="CANCELLED">Cancelled</option>
+            <option value="REFUNDED">Refunded</option>
+          </select>
+          <input type="text" id="order-search" placeholder="Cari invoice / user / item..." oninput="loadOrders()">
+          <button class="btn btn-sm btn-secondary" onclick="loadOrders()">🔄</button>
+          <button class="btn btn-sm btn-success" onclick="exportOrders()">📤 Export CSV</button>
+        </div>
+      </div>
+      <div class="card">
+        <div id="orders-table"></div>
+      </div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section id="section-analytics" class="section">
+      <div class="section-header">
+        <h2>📈 Analytics</h2>
+        <div class="header-actions">
+          <select id="analytics-days" onchange="loadAnalytics()">
+            <option value="7">7 Hari</option>
+            <option value="14">14 Hari</option>
+            <option value="30">30 Hari</option>
+          </select>
+          <button class="btn btn-sm btn-secondary" onclick="loadAnalytics()">🔄 Refresh</button>
+        </div>
+      </div>
+      <div id="analytics-stat-grid" class="stats-grid" style="margin-bottom:20px"></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">📈 Revenue Harian</div>
+          <div class="chart-wrap"><canvas id="chart-analytics-rev"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header">📦 Order Harian</div>
+          <div class="chart-wrap"><canvas id="chart-analytics-ord"></canvas></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">🏆 Top 10 Item (by Revenue)</div>
+          <div id="analytics-top-items"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">👑 Top 10 Buyer</div>
+          <div id="analytics-top-buyers"></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">🍕 Distribusi Status</div>
+          <div class="chart-wrap" style="max-height:220px"><canvas id="chart-status-pie"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-header">💰 Revenue per Kategori</div>
+          <div class="chart-wrap" style="max-height:220px"><canvas id="chart-cat-pie"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIG MANAGER -->
+    <section id="section-gig" class="section">
+      <div class="section-header">
+        <h2>🎁 GiG Manager</h2>
+        <button class="btn btn-sm btn-secondary" onclick="loadGig()">🔄 Refresh</button>
+      </div>
+      <div class="gig-rate-card card">
+        <div class="card-header">💰 GiG Rate</div>
+        <div class="rate-display">
+          <span id="gig-rate-display">Rp —/R$</span>
+          <div class="rate-actions">
+            <input type="number" id="gig-rate-input" placeholder="86" min="1">
+            <button class="btn btn-success" onclick="saveGigRate()">💾 Simpan</button>
+          </div>
+        </div>
+        <div id="gig-rate-examples" class="rate-examples"></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          📋 Item GiG
+          <div class="filter-row">
+            <select id="gig-sub-filter" onchange="loadGig()">
+              <option value="all">Semua SubKategori</option>
+              <option value="limited">🔑 Limited</option>
+              <option value="hot">🔥 Hot</option>
+              <option value="gamepass">🎮 Gamepass</option>
+              <option value="crates">📦 Crates</option>
+              <option value="boost">⚡ Boost</option>
+            </select>
+          </div>
+        </div>
+        <div id="gig-items-table"></div>
+      </div>
+    </section>
+
+    <!-- ALL ITEMS -->
+    <section id="section-items" class="section">
+      <div class="section-header">
+        <h2>📦 Semua Item</h2>
+        <div class="header-actions">
+          <select id="items-cat-filter" onchange="loadItems()">
+            <option value="">Semua Kategori</option>
+          </select>
+          <input type="text" id="items-search" placeholder="Cari item..." oninput="filterItemsTable()">
+          <button class="btn btn-sm btn-secondary" onclick="loadItems()">🔄</button>
+          <button class="btn btn-sm btn-success" onclick="showAddItemModal()">➕ Add Item</button>
+        </div>
+      </div>
+      <div class="card">
+        <div id="items-table"></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section id="section-categories" class="section">
+      <div class="section-header">
+        <h2>📂 Kategori</h2>
+        <button class="btn btn-sm btn-secondary" onclick="loadCategories()">🔄 Refresh</button>
+      </div>
+      <div id="categories-grid" class="categories-grid"></div>
+    </section>
+
+    <!-- STOCK -->
+    <section id="section-stock" class="section">
+      <div class="section-header">
+        <h2>🔢 Stock Manager</h2>
+        <div class="header-actions">
+          <input type="text" id="stock-search" placeholder="Cari item..." oninput="filterStockTable()">
+          <button class="btn btn-sm btn-secondary" onclick="loadStock()">🔄</button>
+          <button class="btn btn-sm btn-warning" onclick="showBulkStockModal()">📋 Bulk Update</button>
+        </div>
+      </div>
+      <div class="card">
+        <div id="stock-table"></div>
+      </div>
+    </section>
+
+    <!-- VOUCHERS -->
+    <section id="section-vouchers" class="section">
+      <div class="section-header">
+        <h2>🎫 Vouchers</h2>
+        <button class="btn btn-sm btn-success" onclick="showCreateVoucherModal()">➕ Buat Voucher</button>
+      </div>
+      <div id="vouchers-grid" class="vouchers-grid"></div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="section-reviews" class="section">
+      <div class="section-header">
+        <h2>⭐ Reviews</h2>
+        <div class="header-actions">
+          <button class="btn btn-sm btn-secondary" onclick="loadReviews()">🔄 Refresh</button>
+          <button class="btn btn-sm btn-danger" onclick="clearAllReviews()">🗑 Hapus Semua</button>
+        </div>
+      </div>
+      <div id="reviews-summary" class="reviews-summary"></div>
+      <div id="reviews-grid" class="reviews-grid"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="section-settings" class="section">
+      <div class="section-header"><h2>⚙️ Settings</h2></div>
+      <div class="settings-grid">
+        <div class="card">
+          <div class="card-header">💱 Rate & Pricing</div>
+          <div class="form-group"><label>GiG Rate (Rp/R$)</label><input type="number" id="set-gig-rate" min="1"></div>
+          <div class="form-group"><label>Robux Login Rate (Rp/R$)</label><input type="number" id="set-robux-rate" min="1"></div>
+          <button class="btn btn-success" onclick="saveRates()">💾 Simpan Rate</button>
+        </div>
+        <div class="card">
+          <div class="card-header">💳 Info Pembayaran DANA</div>
+          <div class="form-group"><label>Nomor DANA</label><input type="text" id="set-dana-number" placeholder="08xxxxxxxxxx"></div>
+          <div class="form-group"><label>Atas Nama</label><input type="text" id="set-dana-name" placeholder="Nama pemilik"></div>
+          <button class="btn btn-success" onclick="saveDana()">💾 Simpan DANA</button>
+        </div>
+        <div class="card">
+          <div class="card-header">🔒 Mode & Keamanan</div>
+          <div class="form-group toggle-row"><span>🔧 Maintenance Mode</span><label class="toggle"><input type="checkbox" id="set-maintenance" onchange="saveSettings()"><span class="toggle-slider"></span></label></div>
+          <div class="form-group toggle-row"><span>🛡️ Anti-Spam</span><label class="toggle"><input type="checkbox" id="set-antispam" onchange="saveSettings()"><span class="toggle-slider"></span></label></div>
+          <div class="form-group toggle-row"><span>📲 Auto-DM Notifikasi</span><label class="toggle"><input type="checkbox" id="set-autodm" onchange="saveSettings()"><span class="toggle-slider"></span></label></div>
+          <div class="form-group"><label>Max Order per User</label><input type="number" id="set-max-order" min="1" max="20"></div>
+          <div class="form-group"><label>Low Stock Alert Threshold</label><input type="number" id="set-low-stock" min="1" max="50"></div>
+          <button class="btn btn-secondary" onclick="saveSettings()">💾 Simpan</button>
+        </div>
+        <div class="card">
+          <div class="card-header">🔑 Ubah Password Admin</div>
+          <div class="form-group"><label>Password Baru</label><input type="password" id="set-new-pass" placeholder="Password baru..."></div>
+          <div class="form-group"><label>Konfirmasi Password</label><input type="password" id="set-confirm-pass" placeholder="Ulangi password..."></div>
+          <button class="btn btn-danger" onclick="changePassword()">🔐 Ganti Password</button>
+        </div>
+        <div class="card">
+          <div class="card-header">🔍 User Lookup</div>
+          <div class="form-group"><label>Discord User ID</label><input type="text" id="set-user-lookup" placeholder="123456789..."></div>
+          <button class="btn btn-secondary" onclick="userLookup()">🔍 Cari</button>
+          <div id="user-lookup-result" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BANS -->
+    <section id="section-bans" class="section">
+      <div class="section-header">
+        <h2>🔨 Ban List</h2>
+        <div class="header-actions">
+          <button class="btn btn-sm btn-secondary" onclick="loadBans()">🔄 Refresh</button>
+          <button class="btn btn-sm btn-danger" onclick="showBanModal()">🔨 Ban User</button>
+        </div>
+      </div>
+      <div class="card"><div id="bans-table"></div></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay" class="modal-overlay" style="display:none" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="modal-title">Detail</span>
+      <button onclick="closeModal()" class="modal-close">✕</button>
+    </div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" style="display:none"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
